@@ -9,8 +9,12 @@ public class Universe extends Canvas {
 	Mass mass;
 	FixedPoint fixedPoint;
 	Spring spring;
-	
-	// Constructor
+
+	/**
+	 * Constructor method.
+	 * @param mass
+	 * @param fixedPoint
+	 */
 	public Universe(Mass mass, FixedPoint fixedPoint) {
 		this.setSize(800, 800);
 		this.setBackground(Color.BLACK);
@@ -18,7 +22,7 @@ public class Universe extends Canvas {
 		this.fixedPoint = fixedPoint;
 	}
 	
-	// Paint method for canvas
+	@Override
 	public void paint(Graphics g) {
 		
 		// Draw a circle to represent the fixed point
@@ -30,7 +34,10 @@ public class Universe extends Canvas {
 		g.fillOval((int) mass.getPosition().getX(), (int) mass.getPosition().getY(), 30, 30);
 	}
 	
-	// Main method
+	/**
+	 * Main method.
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		
 		// Create system components
@@ -38,7 +45,8 @@ public class Universe extends Canvas {
 		ThreeVector vec2 = new ThreeVector(400, 400, 0);
 		Mass mass = new Mass(5000, vec1);
 		FixedPoint fixPoint = new FixedPoint(vec2, 500000000);
-		mass.setVelocity(new ThreeVector(100,0,0));
+		mass.setVelocity(new ThreeVector(2,0,0));
+		
 		// Create window
 		JFrame frame = new JFrame("Eric's Universe");
 		Universe universe = new Universe(mass, fixPoint);
