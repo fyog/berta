@@ -11,12 +11,11 @@ public class Universe extends Canvas {
 	Spring spring;
 	
 	// Constructor
-	public Universe(Mass mass, FixedPoint fixedPoint, Spring spring) {
+	public Universe(Mass mass, FixedPoint fixedPoint) {
 		this.setSize(800, 800);
 		this.setBackground(Color.BLACK);
 		this.mass = mass;
 		this.fixedPoint = fixedPoint;
-		this.spring = spring;
 	}
 	
 	// Paint method for canvas
@@ -43,7 +42,7 @@ public class Universe extends Canvas {
 		
 		// Create window
 		JFrame frame = new JFrame("Eric's Game");
-		Universe universe = new Universe(mass, fixPoint, spring);
+		Universe universe = new Universe(mass, fixPoint);
         frame.add(universe);
         frame.pack();
         frame.setVisible(true);
@@ -52,7 +51,7 @@ public class Universe extends Canvas {
 		double time = 0;
 		
 		// Initiate time step
-		double deltaTime = 0.002;
+		double deltaTime = 0.000002;
 		
 		// Running boolean
 		boolean running = true;
