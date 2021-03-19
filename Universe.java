@@ -34,24 +34,20 @@ public class Universe extends Canvas {
 	public static void main(String[] args) {
 		
 		// Create system components
-		ThreeVector vec1 = new ThreeVector(300, 0, 0);
+		ThreeVector vec1 = new ThreeVector(300, 300, 0);
 		ThreeVector vec2 = new ThreeVector(400, 400, 0);
 		Mass mass = new Mass(5000, vec1);
 		FixedPoint fixPoint = new FixedPoint(vec2, 500000000);
-		Spring spring = new Spring(5000, mass, fixPoint);
-		
+		mass.setVelocity(new ThreeVector(100,0,0));
 		// Create window
-		JFrame frame = new JFrame("Eric's Game");
+		JFrame frame = new JFrame("Eric's Universe");
 		Universe universe = new Universe(mass, fixPoint);
         frame.add(universe);
         frame.pack();
         frame.setVisible(true);
-        
-        // Initiate time counter
-		double time = 0;
-		
+        		
 		// Initiate time step
-		double deltaTime = 0.000002;
+		double deltaTime = 0.00002;
 		
 		// Running boolean
 		boolean running = true;
@@ -70,9 +66,6 @@ public class Universe extends Canvas {
 			
 			// Repaint the canvas
 			universe.repaint();
-
-			// Increment deltaTime
-			time += deltaTime;
 		}
 	}
 }

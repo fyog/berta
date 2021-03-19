@@ -19,4 +19,7 @@ public class FixedPoint {
 	public void setPosition(ThreeVector position) {
 		this.position = position;
 	}
+	public double getMass() {
+		return this.mass;
+	}
 }
