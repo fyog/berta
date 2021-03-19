@@ -132,6 +132,8 @@ public class Mass {
 		
 		// Determine acceleration due to gravity using Newton's Law of Universal Gravitation
 		double distanceX = this.getPosition().getX() - fixPoint.getPosition().getX();
+		
+		// If distance is between -1 and 1, then calculate the accleration as though the distance is one unit
 		if (distanceX > 1 || distanceX < -1) {
 			accelX = fixPoint.getMass() * G / (distanceX * distanceX);
 		} else {
@@ -139,6 +141,7 @@ public class Mass {
 		}
 
 		double distanceY = this.getPosition().getY() - fixPoint.getPosition().getY();
+		// If distance is between -1 and 1, then calculate the accleration as though the distance is one unit
 		if (distanceY > 1 || distanceY < -1 ) {
 			accelY = fixPoint.getMass() * G / (distanceY * distanceY);
 		} else {
