@@ -1,8 +1,10 @@
 
 public class ThreeVector {
 	
-	double x, y, z;
+	private double x, y, z;
 	
+	// Constructors ---------------------------------------------------------------------------------------------------------------------------------------------
+
 	/**
 	 * Constructor method.
 	 * @param x
@@ -15,7 +17,7 @@ public class ThreeVector {
 		this.z = z;
 	}
 	
-	// Getters and setters
+	// Getters and setters --------------------------------------------------------------------------------------------------------------------------------------
 	
 	/**
 	 * Getter for x field.
@@ -65,18 +67,22 @@ public class ThreeVector {
 		this.z = z;
 	}
 	
+	// Overwritten methods --------------------------------------------------------------------------------------------------------------------------------------
+	
 	@Override
 	public String toString() {
 		String str = "X: " + this.x + " Y: " + this.y + " Z: " + this.z;
 		return str;
 	}
 	
+	// Numerical Analysis ---------------------------------------------------------------------------------------------------------------------------------------
+	
 	/**
 	 * Returns the ThreeVector object's magnitude.
 	 * @return double magnitude
 	 */
 	public double getMagnitude() {
-		double magnitude = Math.sqrt(x*x+y*y+z*z);
+		double magnitude = Math.sqrt(x * x + y * y + z * z);
 		return magnitude;
 	}
 	
@@ -86,7 +92,7 @@ public class ThreeVector {
 	 * @return
 	 */
 	public double getDistance(ThreeVector otherEnd) {
-		double distance = Math.sqrt((x-otherEnd.x)*(x-otherEnd.x)+(y-otherEnd.y)*(y-otherEnd.y)+(z-otherEnd.z)*(z-otherEnd.z));
+		double distance = Math.sqrt((x - otherEnd.x) * (x - otherEnd.x) + (y - otherEnd.y) * (y - otherEnd.y) + (z - otherEnd.z) * (z - otherEnd.z));
 		return distance;
 	}
 }

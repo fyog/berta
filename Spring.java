@@ -1,10 +1,13 @@
 
 public class Spring {
 	
-	double k;
-	ThreeVector distance, equilibrium;
-	Mass end1;
-	FixedPoint fixpoint;
+	private double k;
+	private ThreeVector distance, equilibrium;
+	private Mass end1;
+	private FixedPoint fixpoint;
+	
+	// Constructors ---------------------------------------------------------------------------------------------------------------------------------------------
+
 	
 	/**
 	 * Constructor method.
