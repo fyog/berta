@@ -1,17 +1,30 @@
 
 public class Spring {
 	
-	double k;
-	ThreeVector distance, equilibrium;
-	Mass end1;
-	FixedPoint fixpoint;
+	private double k;
+	private ThreeVector distance, equilibrium;
+	private Mass end1;
+	private FixedPoint fixpoint;
 	
+	// Constructors ---------------------------------------------------------------------------------------------------------------------------------------------
+
+	
+	/**
+	 * Constructor method.
+	 * @param k
+	 * @param end1
+	 * @param fixedpoint
+	 */
 	public Spring(double k, Mass end1, FixedPoint fixedpoint) {
 		this.k = k;
 		this.end1 = end1;
 		this.fixpoint = fixedpoint;
 	}
-
+	
+	/**
+	 * NOT IMPLEMENTED
+	 * @return
+	 */
 	public ThreeVector getAccel() {
 		double deltax = end1.getPosition().getX() - fixpoint.getPosition().getX();
 		double deltay = end1.getPosition().getY() - fixpoint.getPosition().getY();

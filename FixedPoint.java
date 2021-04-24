@@ -1,22 +1,59 @@
 public class FixedPoint {
 	
-	ThreeVector position;
-	double mass;
+	private ThreeVector position;
+	private double mass;
 	
-	// Constructors
+	// Constructors ---------------------------------------------------------------------------------------------------------------------------------------------
+	
+	/**
+	 * Constructor method.
+	 * @param position
+	 */
 	public FixedPoint(ThreeVector position) {
 		this.position = position;
 	}
-	public FixedPoint(ThreeVector position, double mass) {
+	
+	/**
+	 * Constructor method.
+	 * @param position
+	 * @param mass
+	 */
+	public FixedPoint(double mass, ThreeVector position) {
 		this.position = position;
 		this.mass = mass;
 	}
 	
-	// Getters and setters
+	// Getters and setters --------------------------------------------------------------------------------------------------------------------------------------
+	
+	/**
+	 * Getter for the position field.
+	 * @return ThreeVector position
+	 */
 	public ThreeVector getPosition() {
 		return position;
 	}
+	
+	/**
+	 * Setter for the position field.
+	 * @param position
+	 */
 	public void setPosition(ThreeVector position) {
 		this.position = position;
+	}
+	
+	/**
+	 * Getter for the mass field.
+	 * @return double mass
+	 */
+	public double getMass() {
+		return this.mass;
+	}
+	
+	/*
+	 * Setter for the mass field.
+	 * @param mass
+	 */
+	public void setMass(double mass) {
+		this.mass = mass;
 	}
 }

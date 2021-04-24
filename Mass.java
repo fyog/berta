@@ -1,96 +1,171 @@
 public class Mass {
 	
-	double mass;
-	ThreeVector	acceleration;
-	ThreeVector velocity;
-	ThreeVector position;
+	private double mass;
+	private ThreeVector	position, velocity, acceleration;
+	final private double R_VALUE = 1.;
 	
-	// Constructor
-	public Mass(float mass, ThreeVector position) {
+	// Constructors ---------------------------------------------------------------------------------------------------------------------------------------------
+	
+	/**
+	 * Constructor method.
+	 * @param mass
+	 * @param position
+	 */
+	public Mass(double mass, ThreeVector position) {
 		this.mass = mass;
 		this.position = position;
-		this.acceleration = new ThreeVector(0, 0, 0);
 		this.velocity = new ThreeVector(0, 0, 0);
+		this.acceleration = new ThreeVector(0, 0, 0);
 	}
 
-	// Getters and setters
+	// Getters and setters -------------------------------------------------------------------------------------------------------------------------------------
+	
+	/**
+	 * Getter for mass field.
+	 * @return double mass
+	 */
 	public double getMass() {
 		return this.mass;
 	}
 	
+	/**
+	 * Getter for position field.
+	 * @return ThreeVector position
+	 */
 	public ThreeVector getPosition() {
 		return position;
 	}
 	
+	/**
+	 * Getter for velocity field.
+	 * @return ThreeVector velocity
+	 */
 	public ThreeVector getVelocity() {
 		return velocity;
 	}
 	
-	public ThreeVector getAccel() {
+	/**
+	 * Getter for acceleration field.
+	 * @return ThreeVector acceleration
+	 */
+	public ThreeVector getAcceleration() {
 		return acceleration;
 	}
 	
-	public void setMAss(double mass) {
+	/**
+	 * Setter for mass field.
+	 * @param mass
+	 */
+	public void setMass(double mass) {
 		this.mass = mass;
 	}
+	
+	/**
+	 * Setter for position field.
+	 * @param position
+	 */
 	public void setPosition(ThreeVector position) {
 		this.position = position;
 	}
 	
+	/**
+	 * Setter for velocity field.
+	 * @param velocity
+	 */
 	public void setVelocity(ThreeVector velocity) {
 		this.velocity = velocity;
 	}
 	
-	public void setAccel(ThreeVector accel) {
-		this.acceleration = accel;
-	}
-
-	// Predictor-corrector methods
-	public void predict(double deltaTime) {
-		
-		// Leapfrog method
-		double x_vel = this.getVelocity().getX() + deltaTime * this.getAccel().getX();
-		double y_vel = this.getVelocity().getY() + deltaTime * this.getAccel().getY();
-		double z_vel = this.getVelocity().getZ() + deltaTime * this.getAccel().getZ();
-		double x_pos = this.getPosition().getX() + deltaTime * x_vel;
-		double y_pos = this.getPosition().getY() + deltaTime * y_vel;
-		double z_pos = this.getPosition().getZ() + deltaTime * z_vel;
-
-		// Update position and velocity
-		ThreeVector newVelocity = new ThreeVector(x_vel, y_vel, z_vel);
-		ThreeVector newPosition = new ThreeVector(x_pos, y_pos, z_pos);
-		this.setPosition(newPosition);
-		this.setVelocity(newVelocity);		
+	/**
+	 * Setter for acceleration field.
+	 * @param acceleration
+	 */
+	public void setAcceleration(ThreeVector acceleration) {
+		this.acceleration = acceleration;
 	}
 	
-	// toString method
+	// Overwritten methods -------------------------------------------------------------------------------------------------------------------------------------
+	
+	@Override
 	public String toString() {
 		String str = "X: " + this.getPosition().getX() + " Y: " + this.getPosition().getY() + " Z: " + this.getPosition().getZ();
 		return str;
 	}
+
+	// Numerical Analysis --------------------------------------------------------------------------------------------------------------------------------------
 	
-	// Gravity method
+	/**
+	 * Using the passed acceleration, this method predicts and updates the position and velocity of the mass object it is called upon. 
+	 * @param deltaTime
+	 */
+	public void predict(double deltaTime) {
+		
+		// Euler's method for velocity
+		double x_vel = this.getVelocity().getX() + deltaTime * this.getAcceleration().getX();
+		double y_vel = this.getVelocity().getY() + deltaTime * this.getAcceleration().getY();
+		double z_vel = this.getVelocity().getZ() + deltaTime * this.getAcceleration().getZ();
+		
+		// Update velocity
+		ThreeVector newVelocity = new ThreeVector(x_vel, y_vel, z_vel);
+		this.setVelocity(newVelocity);
+ 
+		// Euler's method for position
+		double x_pos = this.getPosition().getX() + deltaTime * newVelocity.getX();
+		double y_pos = this.getPosition().getY() + deltaTime * newVelocity.getY();
+		double z_pos = this.getPosition().getZ() + deltaTime * newVelocity.getZ();
+
+		// Update position
+		ThreeVector newPosition = new ThreeVector(x_pos, y_pos, z_pos);
+
+		this.setPosition(newPosition);
+	}
+	
+	/**
+	 * Calculates the acceleration due to the gravitational pull of the passed fixed point object. If the distance between the two objects is less than one 
+	 * unit then the gravity calculation is calculated as though the objects are only one unit apart. This avoids singularity.
+	 * @param fixPoint
+	 * @return ThreeVector acceleration
+	 */
 	public ThreeVector gravity(FixedPoint fixPoint) {
 		
+		// Big G constant
+		final double G = 6.67 * Math.pow(10, -3);
+		
+		double accelerationX, accelerationY, accelerationZ;
+		
 		// Currently, does not operate in the z-direction
-		double accelz = 0;
+		accelerationZ = 0;
 		
 		// Determine acceleration due to gravity using Newton's Law of Universal Gravitation
-		double distancex = 0.001*(this.getPosition().getX() - fixPoint.getPosition().getX());
-		double accelx = ((this.getMass() * fixPoint.mass) * 6.67 * Math.pow(10, -11) / (distancex * distancex)) / this.getMass();
-		double distancey = 0.001*(this.getPosition().getY() - fixPoint.getPosition().getY());
-		double accely = (this.getMass() * fixPoint.mass) * 6.67 * Math.pow(10, -11) / (distancey * distancey) / this.getMass();
 		
-		// Determine the correct direction for the acceleration vector
-		if (this.getPosition().getX() > fixPoint.getPosition().getX()) {
-			accelx *= -1;
+		// If x distance is between R_VALUE and -R_VALUE, then set the x component of acceleration to zero
+		double distanceX = this.getPosition().getX() - fixPoint.getPosition().getX();
+		if (distanceX < R_VALUE && distanceX > -R_VALUE) {
+			accelerationX = 0;
+		} else {
+			accelerationX = fixPoint.getMass() * G / (distanceX * distanceX);
 		}
-		if (this.getPosition().getY() > fixPoint.getPosition().getY()) {
-			accely *= -1;
+		
+		// If y distance is between R_VALUE and -R_VALUE, then set the y component of acceleration to zero
+		double distanceY = this.getPosition().getY() - fixPoint.getPosition().getY();
+		if (distanceY < R_VALUE && distanceY > -R_VALUE) {
+			accelerationY = 0;
+		} else {
+			accelerationY = fixPoint.getMass() * G / (distanceY * distanceY);
 		}
+		
+		// Determine the correct direction for each acceleration component
+		if (distanceX > 0) {
+			accelerationX *= -1;
+		}
+		if (distanceY > 0) {
+			accelerationY *= -1;
+		}
+		
+		// Create new vector
+		ThreeVector acceleration = new ThreeVector(accelerationX, accelerationY, accelerationZ);
 		
 		// Return the acceleration
-		ThreeVector accel = new ThreeVector(accelx, accely, accelz);
-		return accel;	
+		return acceleration;	
 	}
 }

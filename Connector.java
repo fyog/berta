@@ -1,4 +1,4 @@
 
 public interface Connector {
-	// Currently not implemented
+	// NOT IMPLEMENTED
 }
