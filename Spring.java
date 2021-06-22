@@ -11,6 +11,7 @@ public class Spring {
 	
 	/**
 	 * Constructor method.
+	 * 
 	 * @param k
 	 * @param end1
 	 * @param fixedpoint

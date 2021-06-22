@@ -7,6 +7,7 @@ public class FixedPoint {
 	
 	/**
 	 * Constructor method.
+	 * 
 	 * @param position
 	 */
 	public FixedPoint(ThreeVector position) {
@@ -15,6 +16,7 @@ public class FixedPoint {
 	
 	/**
 	 * Constructor method.
+	 * 
 	 * @param position
 	 * @param mass
 	 */
@@ -27,6 +29,7 @@ public class FixedPoint {
 	
 	/**
 	 * Getter for the position field.
+	 * 
 	 * @return ThreeVector position
 	 */
 	public ThreeVector getPosition() {
@@ -35,6 +38,7 @@ public class FixedPoint {
 	
 	/**
 	 * Setter for the position field.
+	 * 
 	 * @param position
 	 */
 	public void setPosition(ThreeVector position) {
@@ -43,6 +47,7 @@ public class FixedPoint {
 	
 	/**
 	 * Getter for the mass field.
+	 * 
 	 * @return double mass
 	 */
 	public double getMass() {
@@ -51,6 +56,7 @@ public class FixedPoint {
 	
 	/*
 	 * Setter for the mass field.
+	 * 
 	 * @param mass
 	 */
 	public void setMass(double mass) {

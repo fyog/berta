@@ -7,6 +7,7 @@ public class ThreeVector {
 
 	/**
 	 * Constructor method.
+	 * 
 	 * @param x
 	 * @param y
 	 * @param z
@@ -21,6 +22,7 @@ public class ThreeVector {
 	
 	/**
 	 * Getter for x field.
+	 * 
 	 * @return double x
 	 */
 	public double getX() {
@@ -29,6 +31,7 @@ public class ThreeVector {
 	
 	/**
 	 * Getter for y field.
+	 * 
 	 * @return double y
 	 */
 	public double getY() {
@@ -37,6 +40,7 @@ public class ThreeVector {
 	
 	/**
 	 * Getter for z field.
+	 * 
 	 * @return double z
 	 */
 	public double getZ() {
@@ -45,6 +49,7 @@ public class ThreeVector {
 	
 	/**
 	 * Setter for x field.
+	 * 
 	 * @param x
 	 */
 	public void setX(double x) {
@@ -53,6 +58,7 @@ public class ThreeVector {
 	
 	/**
 	 * Setter for y field.
+	 * 
 	 * @param y
 	 */
 	public void setY(double y) {
@@ -61,6 +67,7 @@ public class ThreeVector {
 	
 	/**
 	 * Setter for z field.
+	 * 
 	 * @param z
 	 */
 	public void setZ(double z) {
@@ -79,6 +86,7 @@ public class ThreeVector {
 	
 	/**
 	 * Returns the ThreeVector object's magnitude.
+	 * 
 	 * @return double magnitude
 	 */
 	public double getMagnitude() {
@@ -88,6 +96,7 @@ public class ThreeVector {
 	
 	/**
 	 * Returns the distance to the passed ThreeVector object from this one.
+	 * 
 	 * @param otherEnd
 	 * @return
 	 */

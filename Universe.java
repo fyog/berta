@@ -13,6 +13,7 @@ public class Universe extends Canvas {
 
 	/**
 	 * Constructor method.
+	 * 
 	 * @param mass
 	 * @param fixedPoint
 	 */
@@ -41,6 +42,7 @@ public class Universe extends Canvas {
 	
 	/**
 	 * Main method.
+	 * 
 	 * @param args
 	 */
 	public static void main(String[] args) {

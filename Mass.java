@@ -4,10 +4,11 @@ public class Mass {
 	private ThreeVector	position, velocity, acceleration;
 	final private double R_VALUE = 1.;
 	
-	// Constructors ---------------------------------------------------------------------------------------------------------------------------------------------
+	// Constructors ---------------------------------------------------------------------------------------------------
 	
 	/**
 	 * Constructor method.
+	 * 
 	 * @param mass
 	 * @param position
 	 */
@@ -18,10 +19,11 @@ public class Mass {
 		this.acceleration = new ThreeVector(0, 0, 0);
 	}
 
-	// Getters and setters -------------------------------------------------------------------------------------------------------------------------------------
+	// Getters and setters --------------------------------------------------------------------------------------------
 	
 	/**
 	 * Getter for mass field.
+	 * 
 	 * @return double mass
 	 */
 	public double getMass() {
@@ -30,6 +32,7 @@ public class Mass {
 	
 	/**
 	 * Getter for position field.
+	 * 
 	 * @return ThreeVector position
 	 */
 	public ThreeVector getPosition() {
@@ -38,6 +41,7 @@ public class Mass {
 	
 	/**
 	 * Getter for velocity field.
+	 * 
 	 * @return ThreeVector velocity
 	 */
 	public ThreeVector getVelocity() {
@@ -46,6 +50,7 @@ public class Mass {
 	
 	/**
 	 * Getter for acceleration field.
+	 * 
 	 * @return ThreeVector acceleration
 	 */
 	public ThreeVector getAcceleration() {
@@ -54,6 +59,7 @@ public class Mass {
 	
 	/**
 	 * Setter for mass field.
+	 * 
 	 * @param mass
 	 */
 	public void setMass(double mass) {
@@ -61,7 +67,8 @@ public class Mass {
 	}
 	
 	/**
-	 * Setter for position field.
+	 * Setter for position field
+	 * 
 	 * @param position
 	 */
 	public void setPosition(ThreeVector position) {
@@ -70,6 +77,7 @@ public class Mass {
 	
 	/**
 	 * Setter for velocity field.
+	 * 
 	 * @param velocity
 	 */
 	public void setVelocity(ThreeVector velocity) {
@@ -78,24 +86,27 @@ public class Mass {
 	
 	/**
 	 * Setter for acceleration field.
+	 * 
 	 * @param acceleration
 	 */
 	public void setAcceleration(ThreeVector acceleration) {
 		this.acceleration = acceleration;
 	}
 	
-	// Overwritten methods -------------------------------------------------------------------------------------------------------------------------------------
-	
+	// Overwritten methods --------------------------------------------------------------------------------------------
 	@Override
 	public String toString() {
-		String str = "X: " + this.getPosition().getX() + " Y: " + this.getPosition().getY() + " Z: " + this.getPosition().getZ();
+		String str = "X: " + this.getPosition().getX() + " Y: " + this.getPosition().getY() + " Z: " + 
+	this.getPosition().getZ();
 		return str;
 	}
 
-	// Numerical Analysis --------------------------------------------------------------------------------------------------------------------------------------
+	// Numerical Analysis ---------------------------------------------------------------------------------------------
 	
 	/**
-	 * Using the passed acceleration, this method predicts and updates the position and velocity of the mass object it is called upon. 
+	 * Using the passed acceleration, this method predicts and updates the position and velocity of the mass object it 
+	 * is called upon.
+	 * 
 	 * @param deltaTime
 	 */
 	public void predict(double deltaTime) {
@@ -121,8 +132,10 @@ public class Mass {
 	}
 	
 	/**
-	 * Calculates the acceleration due to the gravitational pull of the passed fixed point object. If the distance between the two objects is less than one 
-	 * unit then the gravity calculation is calculated as though the objects are only one unit apart. This avoids singularity.
+	 * Calculates the acceleration due to the gravitational pull of the passed fixed point object. If the distance 
+	 * between the two objects is less than one unit then the gravity calculation is calculated as though the objects 
+	 * are only one unit apart. This avoids singularity.
+	 * 
 	 * @param fixPoint
 	 * @return ThreeVector acceleration
 	 */
@@ -137,7 +150,6 @@ public class Mass {
 		accelerationZ = 0;
 		
 		// Determine acceleration due to gravity using Newton's Law of Universal Gravitation
-		
 		// If x distance is between R_VALUE and -R_VALUE, then set the x component of acceleration to zero
 		double distanceX = this.getPosition().getX() - fixPoint.getPosition().getX();
 		if (distanceX < R_VALUE && distanceX > -R_VALUE) {
