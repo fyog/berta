@@ -1,11 +1,16 @@
 import java.awt.Canvas;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 
 public class Universe extends Canvas {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Mass mass;
 	private Mass mass2;
 	private FixedPoint fixedPoint;
@@ -17,14 +22,14 @@ public class Universe extends Canvas {
 	 * @param fixedPoint
 	 */
 	public Universe(Mass mass, FixedPoint fixedPoint) {
-		this.setSize(1600, 1600);
+		this.setSize(800, 800);
 		this.setBackground(Color.BLACK);
 		this.mass = mass;
 		this.fixedPoint = fixedPoint;
 	}
 	
 	public Universe (Mass mass, Mass mass2) {
-		this.setSize(1600, 1600);
+		this.setSize(800, 800);
 		this.setBackground(Color.BLACK);
 		this.mass = mass;
 		this.mass2 = mass2;
@@ -40,12 +45,27 @@ public class Universe extends Canvas {
 		
 		// Draw a circle to represent the fixed point
 		g.setColor(Color.RED);
-		g.fillOval((int) mass2.getPosition().getX(), (int) mass2.getPosition().getY(), 30, 30);
+		g.fillOval((int) mass2.getPosition().getX(), 
+				(int) mass2.getPosition().getY(), 30, 30);
 		
 		// Draw a circle to represent the mass
 		g.setColor(Color.GREEN);
-		g.fillOval((int) mass.getPosition().getX(), (int) mass.getPosition().getY(), 15, 15);
+		g.fillOval((int) mass.getPosition().getX(), 
+				(int) mass.getPosition().getY(), 15, 15);
+		
+		// Draw a line connecting the centers of mass
+		g.setColor(Color.YELLOW);
+		g.drawLine((int) mass.getPosition().getX() + 7, 
+				(int) mass.getPosition().getY() + 7, 
+				(int) mass2.getPosition().getX() + 15, 
+				(int) mass2.getPosition().getY() + 15);
 	}
+	
+	public void interrupt() {
+		
+        this.interrupt();
+		System.exit(1);
+    }
 	
 	/**
 	 * Main method.
@@ -55,16 +75,10 @@ public class Universe extends Canvas {
 	public static void main(String[] args) {
 		
 		// Create system components
-		ThreeVector vec1 = new ThreeVector(300, 300, 0);
+		ThreeVector vec1 = new ThreeVector(450, 450, 0);
 		ThreeVector vec2 = new ThreeVector(400, 400, 0);
-		Mass mass = new Mass(.05, vec1, 1);
-		Mass mass2 = new Mass(50, vec2, 1);
-		
-		// Set mass' initial velocity and initial acceleration
-		mass.setVelocity(new ThreeVector(1, 0, 0));
-		mass.setAcceleration(new ThreeVector(0, 0, 0));
-		mass2.setVelocity(new ThreeVector(0, 0, 0));
-		mass2.setAcceleration(new ThreeVector(0, 0, 0));
+		Mass mass = new Mass(5, vec1, 1);
+		Mass mass2 = new Mass(500, vec2, 1);
 		
 		// Create window
 		JFrame frame = new JFrame("Eric's Universe");
@@ -72,10 +86,14 @@ public class Universe extends Canvas {
         frame.add(universe);
         frame.pack();
         frame.setVisible(true);
-        		
+        
+
+		System.out.println(mass.getPosition().getX());
+
+		System.out.println(mass.getPosition().getY());
 		// Initiate time step
         double time = .0;
-		double deltaTime = .00002;
+		double deltaTime = .000002;
 		
 		// Running boolean
 		boolean running = true;
@@ -83,24 +101,22 @@ public class Universe extends Canvas {
 		// Simulations loop begins...
 		while (running) {
 			
-			// Find and update mass acceleration due to gravity
-			ThreeVector accel = mass.gravity(mass2);
-			ThreeVector accel2 = mass2.gravity(mass);
-			
 			// Set acceleration of mass
-			mass.setAcceleration(accel);
-			mass2.setAcceleration(accel2);
+			mass.setAcceleration(mass.gravity(mass2));
+			mass2.setAcceleration(mass2.gravity(mass));
 			 
 			// Predict new position and velocity based off of new acceleration
 			mass.predict(deltaTime);
 			mass2.predict(deltaTime);
-			// Repaint the canvas every ten 10 time steps
-			if ( (int) time % 10 == 0) {
+			
+			// Repaint the canvas every ten 10 time steps	
+			if ( (int) time % 1 == 0) {
 				universe.repaint();
 			}
 			
 			// Increment time counter
 			time += deltaTime;
+			
 		}
 	}
 }

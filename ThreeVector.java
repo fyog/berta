@@ -3,8 +3,7 @@ public class ThreeVector {
 	
 	private double x, y, z;
 	
-	// Constructors ---------------------------------------------------------------------------------------------------------------------------------------------
-
+	// Constructors -----------------------------------------------------------
 	/**
 	 * Constructor method.
 	 * 
@@ -19,12 +18,12 @@ public class ThreeVector {
 	}
 	
 	public ThreeVector() {
-		this.x = 0.0;
+		this.x = -5.0;
 		this.y = 0.0;
 		this.z = 0.0;
 	}
 	
-	// Getters and setters --------------------------------------------------------------------------------------------------------------------------------------
+	// Getters and setters ----------------------------------------------------
 	
 	/**
 	 * Getter for x field.
@@ -80,16 +79,14 @@ public class ThreeVector {
 		this.z = z;
 	}
 	
-	// Overwritten methods --------------------------------------------------------------------------------------------------------------------------------------
-	
+	// Overwritten methods ----------------------------------------------------
 	@Override
 	public String toString() {
 		String str = "X: " + this.x + " Y: " + this.y + " Z: " + this.z;
 		return str;
 	}
 	
-	// Numerical Analysis ---------------------------------------------------------------------------------------------------------------------------------------
-	
+	// Numerical Analysis -----------------------------------------------------
 	/**
 	 * Returns the ThreeVector object's magnitude.
 	 * 
@@ -100,14 +97,42 @@ public class ThreeVector {
 		return magnitude;
 	}
 	
+	public ThreeVector scale(double scale_factor) {
+		double x = this.getX() * scale_factor;
+		double y = this.getY() * scale_factor;
+		double z = this.getZ() * scale_factor;
+		return new ThreeVector(x, y, z);
+	}
+	public ThreeVector add(ThreeVector other) {
+		double x = this.getX() + other.getX();
+		double y = this.getY() + other.getY();
+		double z = this.getZ() + other.getZ();
+		return new ThreeVector(x, y, z);
+
+	}
+	public ThreeVector minus(ThreeVector other) {
+		double x = other.getX() - this.getX();
+		double y = other.getY() - this.getY();
+		double z = other.getZ() - this.getZ();
+		return new ThreeVector(x, y, z);
+	}
+	public ThreeVector direction() {
+        if (this.getMagnitude() == 0.0) {
+        	System.out.println("zero length vector");
+        }
+        return this.scale(1.0 / this.getMagnitude());
+    }
 	/**
 	 * Returns the distance to the passed ThreeVector object from this one.
 	 * 
 	 * @param otherEnd
 	 * @return
 	 */
-	public double getDistance(ThreeVector otherEnd) {
-		double distance = Math.sqrt((x - otherEnd.x) * (x - otherEnd.x) + (y - otherEnd.y) * (y - otherEnd.y) + (z - otherEnd.z) * (z - otherEnd.z));
+	public double getDistance(Mass mass) {
+		double distance = Math.sqrt((x - mass.getPosition().getX()) * (x 
+				- mass.getPosition().getX()) + (y - mass.getPosition().getY())
+				* (y - mass.getPosition().getY()) + (z - 
+				mass.getPosition().getZ() * (z - mass.getPosition().getZ())));
 		return distance;
 	}
 }

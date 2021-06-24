@@ -5,7 +5,7 @@ public class Mass {
 	private double G;
 	private ThreeVector	position, velocity, acceleration;
 	
-	// Constructors ---------------------------------------------------------------------------------------------------
+	// Constructors -----------------------------------------------------------
 	
 	/**
 	 * Constructor method.
@@ -21,7 +21,7 @@ public class Mass {
 		this.G = G;
 	}
 
-	// Getters and setters --------------------------------------------------------------------------------------------
+	// Getters and setters ----------------------------------------------------
 	
 	/**
 	 * Getter for mass field.
@@ -95,75 +95,50 @@ public class Mass {
 		this.acceleration = acceleration;
 	}
 	
-	// Overwritten methods --------------------------------------------------------------------------------------------
 	@Override
 	public String toString() {
-		String str = "X: " + this.getPosition().getX() + " Y: " + this.getPosition().getY() + " Z: " + 
-	this.getPosition().getZ();
+		String str = "X: " + this.getPosition().getX() + " Y: " + 
+				this.getPosition().getY() + " Z: " + this.getPosition().getZ();
 		return str;
 	}
-
-	// Numerical Analysis ---------------------------------------------------------------------------------------------
 	
 	/**
-	 * Using the passed acceleration, this method predicts and updates the position and velocity of the mass object it 
-	 * is called upon.
+	 * Using the passed acceleration, this method predicts and updates the 
+	 * position and velocity of the mass object it is called upon.
 	 * 
 	 * @param deltaTime
 	 */
 	public void predict(double deltaTime) {
 		
 		// Newton's method for velocity
-		double x_vel = this.getVelocity().getX() + deltaTime * this.getAcceleration().getX();
-		double y_vel = this.getVelocity().getY() + deltaTime * this.getAcceleration().getY();
-		double z_vel = this.getVelocity().getZ() + deltaTime * this.getAcceleration().getZ();
-	
-		//  Updated velocity
-		ThreeVector newVelocity = new ThreeVector(x_vel, y_vel, z_vel);
-		this.setVelocity(newVelocity); 
+		ThreeVector velocity = this.getVelocity().add(this.getAcceleration()
+				.scale(deltaTime));
 		
-		// Newton's method for position using new velocity
-		double x_pos = this.getPosition().getX() + deltaTime * newVelocity.getX(); 
-		double y_pos = this.getPosition().getY() + deltaTime * newVelocity.getY();
-		double z_pos = this.getPosition().getZ() + deltaTime * newVelocity.getZ();
-
-		// Updated position
-		ThreeVector newPosition = new ThreeVector(x_pos, y_pos, z_pos);
-
-		this.setPosition(newPosition);
+		// Update velocity
+		this.setVelocity(velocity);
+		
+		ThreeVector position = this.getPosition().add(this.getVelocity()
+				.scale(deltaTime));
+		
+		// Update position
+		this.setPosition(position);
 	}
 	
 	/**
-	 * Calculates the acceleration due to the gravitational pull of the passed fixed point object.
+	 * Calculates the acceleration due to the gravitational pull of the passed
+	 * mass object.
 	 * 
 	 * @param fixPoint
 	 * @return ThreeVector acceleration
 	 */
-	public ThreeVector gravity(Mass mass) {
+	public ThreeVector gravity(Mass other) {
 		
-		double accelerationX, accelerationY;
-		
-		// Determine acceleration due to gravity using Newton's Law of Universal Gravitation
-	
-		double distanceX = this.getPosition().getX() - mass.getPosition().getX();
-		accelerationX = mass.getMass() * G / (distanceX * distanceX);
-		double distanceY = this.getPosition().getY() - mass.getPosition().getY();
-		accelerationY = mass.getMass() * G / (distanceY * distanceY);
-		
-		
-		// Determine the correct direction for each acceleration component
-		if (distanceX > 0) accelerationX *= -1;
-		if (distanceY > 0) accelerationY *= -1;
-		
-		
-		// Create new vector
-		ThreeVector acceleration = new ThreeVector(accelerationX, accelerationY, 0);
-		
-		// Return the acceleration
-		if ((distanceX < 1 && distanceX > -1) || (distanceY < 1 && distanceY > -1)) return new ThreeVector();
-		else return acceleration;	
+		// Determine acceleration due to gravity using Newton's Law of 
+		// Universal Gravitation
+		ThreeVector delta = this.getPosition().minus(other.getPosition());
+		double dist = delta.getMagnitude();
+		double F = (G * this.getMass() * other.getMass()) / (dist * dist);
+		if (dist < 1) return new ThreeVector();
+		else return delta.direction().scale(F);
 	}
-	/**
-	 * Calculates the acceleration due to the spring force on the passed mass.
-	 */
 }

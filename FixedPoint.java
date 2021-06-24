@@ -3,7 +3,7 @@ public class FixedPoint {
 	private ThreeVector position;
 	private double mass;
 	
-	// Constructors ---------------------------------------------------------------------------------------------------------------------------------------------
+	// Constructors -----------------------------------------------------------
 	
 	/**
 	 * Constructor method.
@@ -25,7 +25,7 @@ public class FixedPoint {
 		this.mass = mass;
 	}
 	
-	// Getters and setters --------------------------------------------------------------------------------------------------------------------------------------
+	// Getters and setters ----------------------------------------------------
 	
 	/**
 	 * Getter for the position field.
