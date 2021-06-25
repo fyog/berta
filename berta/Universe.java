@@ -107,7 +107,6 @@ public class Universe extends Canvas implements ActionListener {
 		
 		reset_button.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
 				paused = false;
 				// Recreate system components
 				ThreeVector pos1 = new ThreeVector(500, 500, 500);
@@ -118,7 +117,6 @@ public class Universe extends Canvas implements ActionListener {
 				masses[0].setVelocity(vel1);
 				masses[1].setPosition(pos2);
 				masses[1].setVelocity(vel2);
-				
 			}
 		});
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
@@ -151,7 +149,6 @@ public class Universe extends Canvas implements ActionListener {
 		universe.setUpUniverse();
         
 		// Initiate time step
-        double time = .0;
 		double deltaTime = .00002;
 		
 		// Running boolean
