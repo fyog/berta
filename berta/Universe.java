@@ -24,8 +24,6 @@ public class Universe extends Canvas implements ActionListener {
 	boolean paused = false;
 	Random rand = new Random();
 
-	
-	
 	/**
 	 * Constructor method.
 	 * 
@@ -94,7 +92,9 @@ public class Universe extends Canvas implements ActionListener {
 		JButton reset_button = new JButton("Reset");
 		
 		pause_button.addActionListener(new ActionListener() {
-		    public void actionPerformed(ActionEvent e) {
+			
+		    @Override
+			public void actionPerformed(ActionEvent e) {
 		    	if (paused) {
 					paused = false;
 					System.out.println("Unpaused");
@@ -106,6 +106,8 @@ public class Universe extends Canvas implements ActionListener {
 		});
 		
 		reset_button.addActionListener(new ActionListener() {
+			
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				paused = false;
 				// Recreate system components
@@ -119,17 +121,19 @@ public class Universe extends Canvas implements ActionListener {
 				masses[1].setVelocity(vel2);
 			}
 		});
+		
+		// Configure UI
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		panel.setPreferredSize(new Dimension(SIM_WINDOW_WIDTH, 850));
 		panel.add(this);
 		panel.add(pause_button);
 		panel.add(reset_button);
-
 		frame.add(panel);
 		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
 	}
+	
 	/**
 	 * Main method.
 	 * 
@@ -169,7 +173,7 @@ public class Universe extends Canvas implements ActionListener {
 			mass2.predict(deltaTime);
 			
 			// Repaint the canvas
-			//if ((int) time % 0.1 == 0) {
+			//if ((int) time % 1 == 0) {
 				universe.repaint();
 			//}
 			
