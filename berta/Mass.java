@@ -1,27 +1,30 @@
+package berta;
+
+import java.awt.Color;
+
 public class Mass {
 		
 	// Fields
 	private double mass;
 	private double G;
 	private ThreeVector	position, velocity, acceleration;
-	
-	// Constructors -----------------------------------------------------------
-	
+	private Color color;
+		
 	/**
 	 * Constructor method.
 	 * 
 	 * @param mass
 	 * @param position
 	 */
-	public Mass(double mass, ThreeVector position, double G) {
+	public Mass(double mass, ThreeVector position, ThreeVector velocity,
+	double G, Color color) {
 		this.mass = mass;
 		this.position = position;
-		this.velocity = new ThreeVector();
+		this.velocity = velocity;
 		this.acceleration = new ThreeVector();
 		this.G = G;
+		this.color = color;
 	}
-
-	// Getters and setters ----------------------------------------------------
 	
 	/**
 	 * Getter for mass field.
@@ -60,6 +63,24 @@ public class Mass {
 	}
 	
 	/**
+	 * Getter for G field.
+	 * 
+	 * @return double G value
+	 */
+	public double getG() {
+		return G;
+	}
+	
+	/**
+	 * Getter for color field.
+	 * 
+	 * @return Color color of the mass
+	 */
+	public Color getColor() {
+		return color;
+	}
+	
+	/**
 	 * Setter for mass field.
 	 * 
 	 * @param mass
@@ -95,10 +116,35 @@ public class Mass {
 		this.acceleration = acceleration;
 	}
 	
+	/**
+	 * Setter for G field.
+	 * 
+	 * @param G
+	 */
+	public void setG(double G) {
+		this.G = G;
+	}
+	
+	/**
+	 * Setter for Color field.
+	 * 
+	 * @param color
+	 */
+	public void setColor(Color color) {
+		this.color = color;
+	}
+	
+	/**
+	 * To string method.
+	 * 
+	 * @return string representation of the Mass object
+	 */
 	@Override
 	public String toString() {
-		String str = "X: " + this.getPosition().getX() + " Y: " + 
-				this.getPosition().getY() + " Z: " + this.getPosition().getZ();
+		String str = "Mass: " + this.getMass() + "X: " + this.getPosition()
+		.getX() + " Y: " + this.getPosition().getY() + " Z: " + this.
+		getPosition().getZ() + "G: " + this.getG() + "Color: " + 
+		this.getColor();
 		return str;
 	}
 	
@@ -116,17 +162,19 @@ public class Mass {
 		
 		// Update velocity
 		this.setVelocity(velocity);
+		velocity.toString();
 		
 		ThreeVector position = this.getPosition().add(this.getVelocity()
 				.scale(deltaTime));
 		
 		// Update position
 		this.setPosition(position);
+		position.toString();
 	}
 	
 	/**
-	 * Calculates the acceleration due to the gravitational pull of the passed
-	 * mass object.
+	 * Calculates the acceleration of the current mass due to the gravitational
+	 * pull of the passed mass object.
 	 * 
 	 * @param fixPoint
 	 * @return ThreeVector acceleration
@@ -137,8 +185,8 @@ public class Mass {
 		// Universal Gravitation
 		ThreeVector delta = this.getPosition().minus(other.getPosition());
 		double dist = delta.getMagnitude();
-		double F = (G * this.getMass() * other.getMass()) / (dist * dist);
-		if (dist < 1) return new ThreeVector();
-		else return delta.direction().scale(F);
+		double force = (G * this.getMass() * other.getMass()) / (dist * dist);
+		if (dist < 1 && dist > -1) return new ThreeVector();
+		else return delta.direction().scale(force);
 	}
 }

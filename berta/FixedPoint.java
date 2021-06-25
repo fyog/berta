@@ -1,3 +1,5 @@
+package berta;
+
 public class FixedPoint {
 	
 	private ThreeVector position;
